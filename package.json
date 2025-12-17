@@ -20,7 +20,7 @@
     "description": "",
     "dependencies": {
         "cafe-utility": "^33.3.1",
-        "viem": "^2.38.2"
+        "viem": "^2.40.3"
     },
     "devDependencies": {
         "typescript": "^5.9.3"
