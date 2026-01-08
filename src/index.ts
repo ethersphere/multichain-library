@@ -1,6 +1,7 @@
 import { FixedPointNumber, Objects, RollingValueProvider } from 'cafe-utility'
 import { Constants } from './Constants'
 import { getGnosisBzzBalance } from './GnosisBzzBalance'
+import { transferGnosisBzz, TransferGnosisBzzOptions } from './GnosisBzzTransfer'
 import { getGnosisNativeBalance } from './GnosisNativeBalance'
 import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativeTransfer'
 import { GnosisSwapAutoOptions, GnosisSwapCustomOptions, swapOnGnosisAuto, swapOnGnosisCustom } from './GnosisSwap'
@@ -54,6 +55,10 @@ export class MultichainLibrary {
 
     multiTransferGnosisNative(options: MultiTransferGnosisNativeOptions): Promise<MultiTransferGnosisNativeResult> {
         return multiTransferGnosisNative(options, this.settings, this.jsonRpcProvider)
+    }
+
+    transferGnosisBzz(options: TransferGnosisBzzOptions): Promise<`0x${string}`> {
+        return transferGnosisBzz(options, this.settings, this.jsonRpcProvider)
     }
 
     waitForGnosisBzzBalanceToIncrease(address: string, initialBalance: bigint): Promise<void> {

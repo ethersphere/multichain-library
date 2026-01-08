@@ -4,19 +4,19 @@ import { privateKeyToAccount } from 'viem/accounts'
 import { gnosis } from 'viem/chains'
 import { Constants } from './Constants'
 import { selectGasPrice } from './GasPriceSelector'
+import { GnosisBzzABI } from './GnosisBzzAbi'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import { MultichainLibrarySettings } from './Settings'
 
-export interface TransferGnosisNativeOptions {
+export interface TransferGnosisBzzOptions {
     amount: string | bigint
     originPrivateKey: `0x${string}`
     originAddress: `0x${string}`
     to: `0x${string}`
-    nonce?: number
 }
 
-export async function transferGnosisNative(
-    options: TransferGnosisNativeOptions,
+export async function transferGnosisBzz(
+    options: TransferGnosisBzzOptions,
     settings: MultichainLibrarySettings,
     jsonRpcProvider: RollingValueProvider<string>
 ): Promise<`0x${string}`> {
@@ -27,19 +27,18 @@ export async function transferGnosisNative(
     })
     for (let i = 0; i < 4; i++) {
         try {
-            const serializedTransaction = await account.signTransaction({
-                chain: Constants.gnosisChainId,
-                chainId: Constants.gnosisChainId,
-                account: options.originAddress,
-                gas: 21000n,
+            const hash = await client.writeContract({
+                account,
+                abi: GnosisBzzABI,
+                address: Constants.bzzGnosisAddress,
+                functionName: 'transfer',
+                args: [options.to, BigInt(options.amount)],
+                gas: 100000n,
                 gasPrice: selectGasPrice(i),
                 type: 'legacy',
-                to: options.to,
-                value: BigInt(options.amount),
-                nonce:
-                    options.nonce ?? (await getGnosisTransactionCount(options.originAddress, settings, jsonRpcProvider))
+                chain: gnosis,
+                nonce: await getGnosisTransactionCount(options.originAddress, settings, jsonRpcProvider)
             })
-            const hash = await client.sendRawTransaction({ serializedTransaction })
             return hash
         } catch (error) {
             if (Objects.errorMatches(error, 'FeeTooLow')) {
@@ -49,5 +48,5 @@ export async function transferGnosisNative(
             }
         }
     }
-    throw Error('Failed to send transaction after multiple attempts due to low fees.')
+    throw Error('Failed to write contract after multiple attempts due to low fees.')
 }
