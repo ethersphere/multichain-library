@@ -13,6 +13,7 @@ export interface TransferGnosisBzzOptions {
     originPrivateKey: `0x${string}`
     originAddress: `0x${string}`
     to: `0x${string}`
+    nonce?: number
 }
 
 export async function transferGnosisBzz(
@@ -37,7 +38,8 @@ export async function transferGnosisBzz(
                 gasPrice: selectGasPrice(i),
                 type: 'legacy',
                 chain: gnosis,
-                nonce: await getGnosisTransactionCount(options.originAddress, settings, jsonRpcProvider)
+                nonce:
+                    options.nonce ?? (await getGnosisTransactionCount(options.originAddress, settings, jsonRpcProvider))
             })
             return hash
         } catch (error) {
