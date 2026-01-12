@@ -33,6 +33,11 @@ export class MultichainLibrary {
         this.jsonRpcProvider = new RollingValueProvider(this.settings.gnosisJsonRpcProviders)
     }
 
+    updateSettings(settings: Partial<MultichainLibrarySettings>) {
+        this.settings = Objects.deepMerge2(getDefaultMultichainLibrarySettings(), settings || {})
+        this.jsonRpcProvider = new RollingValueProvider(this.settings.gnosisJsonRpcProviders)
+    }
+
     getGnosisBzzBalance(address: string): Promise<FixedPointNumber> {
         return getGnosisBzzBalance(address, this.settings, this.jsonRpcProvider)
     }

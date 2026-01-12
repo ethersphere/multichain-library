@@ -8,6 +8,6 @@ export interface MultichainLibrarySettings {
 export function getDefaultMultichainLibrarySettings() {
     return {
         gnosisJsonRpcProviders: ['https://rpc.gnosischain.com', 'https://xdai.fairdatasociety.org'],
-        fetchTimeoutMillis: Dates.seconds(12)
+        fetchTimeoutMillis: Dates.seconds(15)
     }
 }

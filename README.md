@@ -50,3 +50,18 @@ const library = new MultichainLibrary(settings)
 -   `getSushiSwapQuote(amount: string, sender: string, recipient: string): Promise<SushiResponse>`
 -   `swapOnGnosisCustom(options: GnosisSwapCustomOptions): Promise<string>`
 -   `swapOnGnosisAuto(options: GnosisSwapAutoOptions): Promise<string>`
+
+## Token transfer helpers
+
+-   `transferGnosisBzz(options: GnosisBzzTransferOptions): Promise<string>`
+-   `transferGnosisNative(options: GnosisNativeTransferOptions): Promise<string>`
+
+In both cases, `options` is:
+
+```ts
+amount: string | bigint
+originPrivateKey: `0x${string}`
+originAddress: `0x${string}`
+to: `0x${string}`
+nonce?: number
+```
