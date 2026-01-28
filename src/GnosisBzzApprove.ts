@@ -4,18 +4,19 @@ import { privateKeyToAccount } from 'viem/accounts'
 import { gnosis } from 'viem/chains'
 import { Constants } from './Constants'
 import { selectGasPrice } from './GasPriceSelector'
+import { GnosisBzzABI } from './GnosisBzzAbi'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import { MultichainLibrarySettings } from './Settings'
 
-export interface TransferGnosisNativeOptions {
+export interface ApproveGnosisBzzOptions {
     amount: string | bigint
     originPrivateKey: `0x${string}`
-    to: `0x${string}`
+    spender: `0x${string}`
     nonce?: number
 }
 
-export async function transferGnosisNative(
-    options: TransferGnosisNativeOptions,
+export async function approveGnosisBzz(
+    options: ApproveGnosisBzzOptions,
     settings: MultichainLibrarySettings,
     jsonRpcProvider: RollingValueProvider<string>
 ): Promise<`0x${string}`> {
@@ -26,18 +27,18 @@ export async function transferGnosisNative(
     })
     for (let i = 0; i < 4; i++) {
         try {
-            const serializedTransaction = await account.signTransaction({
-                chain: Constants.gnosisChainId,
-                chainId: Constants.gnosisChainId,
-                account: account.address,
-                gas: 21000n,
+            const hash = await client.writeContract({
+                account,
+                abi: GnosisBzzABI,
+                address: Constants.bzzGnosisAddress,
+                functionName: 'approve',
+                args: [options.spender, BigInt(options.amount)],
+                gas: 100000n,
                 gasPrice: selectGasPrice(i),
                 type: 'legacy',
-                to: options.to,
-                value: BigInt(options.amount),
+                chain: gnosis,
                 nonce: options.nonce ?? (await getGnosisTransactionCount(account.address, settings, jsonRpcProvider))
             })
-            const hash = await client.sendRawTransaction({ serializedTransaction })
             return hash
         } catch (error) {
             if (Objects.errorMatches(error, 'FeeTooLow')) {
@@ -47,5 +48,5 @@ export async function transferGnosisNative(
             }
         }
     }
-    throw Error('Failed to send transaction after multiple attempts due to low fees.')
+    throw Error('Failed to write contract after multiple attempts due to low fees.')
 }

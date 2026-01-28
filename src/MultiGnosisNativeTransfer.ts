@@ -1,4 +1,5 @@
 import { RollingValueProvider } from 'cafe-utility'
+import { privateKeyToAccount } from 'viem/accounts'
 import { transferGnosisNative } from './GnosisNativeTransfer'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import { MultichainLibrarySettings } from './Settings'
@@ -6,7 +7,6 @@ import { MultichainLibrarySettings } from './Settings'
 export interface MultiTransferGnosisNativeOptions {
     amount: string | bigint
     originPrivateKey: `0x${string}`
-    originAddress: `0x${string}`
     to: `0x${string}`[]
     nonce?: number
 }
@@ -31,16 +31,16 @@ export async function multiTransferGnosisNative(
     settings: MultichainLibrarySettings,
     jsonRpcProvider: RollingValueProvider<string>
 ): Promise<MultiTransferGnosisNativeResult> {
+    const account = privateKeyToAccount(options.originPrivateKey)
     const transactions: AddressfulTransaction[] = []
     const errors: AddressfulError[] = []
-    let nonce = options.nonce ?? (await getGnosisTransactionCount(options.originAddress, settings, jsonRpcProvider))
+    let nonce = options.nonce ?? (await getGnosisTransactionCount(account.address, settings, jsonRpcProvider))
     for (const address of options.to) {
         try {
             const transaction = await transferGnosisNative(
                 {
                     amount: options.amount,
                     originPrivateKey: options.originPrivateKey,
-                    originAddress: options.originAddress,
                     to: address,
                     nonce: nonce++
                 },

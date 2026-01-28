@@ -10,7 +10,6 @@ import { getSushiSwapQuote } from './SushiSwap'
 export interface GnosisSwapAutoOptions {
     amount: string | bigint
     originPrivateKey: `0x${string}`
-    originAddress: `0x${string}`
     to: `0x${string}`
 }
 
@@ -19,11 +18,11 @@ export async function swapOnGnosisAuto(
     settings: MultichainLibrarySettings,
     jsonRpcProvider: RollingValueProvider<string>
 ) {
-    const quote = await getSushiSwapQuote(options.amount.toString(), options.originAddress, options.to, settings)
+    const account = privateKeyToAccount(options.originPrivateKey)
+    const quote = await getSushiSwapQuote(options.amount.toString(), account.address, options.to, settings)
     return swapOnGnosisCustom(
         {
             originPrivateKey: options.originPrivateKey,
-            originAddress: options.originAddress,
             gas: (BigInt(quote.tx.gas) * 5n) / 4n, // add 25% buffer
             gasPrice: BigInt(quote.tx.gasPrice),
             to: quote.tx.to,
@@ -37,7 +36,6 @@ export async function swapOnGnosisAuto(
 
 export interface GnosisSwapCustomOptions {
     originPrivateKey: `0x${string}`
-    originAddress: `0x${string}`
     gas: bigint | string | number
     gasPrice: bigint | string | number
     to: `0x${string}`
@@ -56,14 +54,14 @@ export async function swapOnGnosisCustom(
         .signTransaction({
             chain: Constants.gnosisChainId,
             chainId: Constants.gnosisChainId,
-            account: options.originAddress,
+            account: account.address,
             gas: (BigInt(options.gas) * 5n) / 4n, // add 25% buffer
             gasPrice: BigInt(options.gasPrice),
             type: 'legacy',
             to: options.to,
             value: BigInt(options.value),
             data: options.data,
-            nonce: await getGnosisTransactionCount(options.originAddress, settings, jsonRpcProvider)
+            nonce: await getGnosisTransactionCount(account.address, settings, jsonRpcProvider)
         })
         .then(signedTx => client.sendRawTransaction({ serializedTransaction: signedTx }))
 }

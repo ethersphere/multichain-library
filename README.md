@@ -61,7 +61,10 @@ In both cases, `options` is:
 ```ts
 amount: string | bigint
 originPrivateKey: `0x${string}`
-originAddress: `0x${string}`
 to: `0x${string}`
 nonce?: number
 ```
+
+## BZZ helpers
+
+-   `approveGnosisBzz(options: ApproveGnosisBzzOptions): Promise<string>`

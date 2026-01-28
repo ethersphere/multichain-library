@@ -11,7 +11,6 @@ import { MultichainLibrarySettings } from './Settings'
 export interface TransferGnosisBzzOptions {
     amount: string | bigint
     originPrivateKey: `0x${string}`
-    originAddress: `0x${string}`
     to: `0x${string}`
     nonce?: number
 }
@@ -38,8 +37,7 @@ export async function transferGnosisBzz(
                 gasPrice: selectGasPrice(i),
                 type: 'legacy',
                 chain: gnosis,
-                nonce:
-                    options.nonce ?? (await getGnosisTransactionCount(options.originAddress, settings, jsonRpcProvider))
+                nonce: options.nonce ?? (await getGnosisTransactionCount(account.address, settings, jsonRpcProvider))
             })
             return hash
         } catch (error) {

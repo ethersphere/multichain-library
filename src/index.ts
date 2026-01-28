@@ -1,9 +1,11 @@
 import { FixedPointNumber, Objects, RollingValueProvider } from 'cafe-utility'
 import { Constants } from './Constants'
+import { approveGnosisBzz, ApproveGnosisBzzOptions } from './GnosisBzzApprove'
 import { getGnosisBzzBalance } from './GnosisBzzBalance'
 import { transferGnosisBzz, TransferGnosisBzzOptions } from './GnosisBzzTransfer'
 import { getGnosisNativeBalance } from './GnosisNativeBalance'
 import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativeTransfer'
+import { createBatchGnosis, CreateBatchGnosisOptions } from './GnosisPostageStampCreateBatch'
 import { GnosisSwapAutoOptions, GnosisSwapCustomOptions, swapOnGnosisAuto, swapOnGnosisCustom } from './GnosisSwap'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import {
@@ -64,6 +66,14 @@ export class MultichainLibrary {
 
     transferGnosisBzz(options: TransferGnosisBzzOptions): Promise<`0x${string}`> {
         return transferGnosisBzz(options, this.settings, this.jsonRpcProvider)
+    }
+
+    approveGnosisBzz(options: ApproveGnosisBzzOptions): Promise<`0x${string}`> {
+        return approveGnosisBzz(options, this.settings, this.jsonRpcProvider)
+    }
+
+    createBatchGnosis(options: CreateBatchGnosisOptions): Promise<`0x${string}`> {
+        return createBatchGnosis(options, this.settings, this.jsonRpcProvider)
     }
 
     waitForGnosisBzzBalanceToIncrease(address: string, initialBalance: bigint): Promise<void> {
