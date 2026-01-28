@@ -6,6 +6,7 @@ import { transferGnosisBzz, TransferGnosisBzzOptions } from './GnosisBzzTransfer
 import { getGnosisNativeBalance } from './GnosisNativeBalance'
 import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativeTransfer'
 import { createBatchGnosis, CreateBatchGnosisOptions } from './GnosisPostageStampCreateBatch'
+import { getStoragePriceGnosis } from './GnosisPostageStampStoragePrice'
 import { GnosisSwapAutoOptions, GnosisSwapCustomOptions, swapOnGnosisAuto, swapOnGnosisCustom } from './GnosisSwap'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import {
@@ -74,6 +75,10 @@ export class MultichainLibrary {
 
     createBatchGnosis(options: CreateBatchGnosisOptions): Promise<`0x${string}`> {
         return createBatchGnosis(options, this.settings, this.jsonRpcProvider)
+    }
+
+    getStoragePriceGnosis(): Promise<bigint> {
+        return getStoragePriceGnosis(this.settings, this.jsonRpcProvider)
     }
 
     waitForGnosisBzzBalanceToIncrease(address: string, initialBalance: bigint): Promise<void> {
