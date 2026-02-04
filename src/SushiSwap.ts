@@ -1,3 +1,4 @@
+import { Types } from 'cafe-utility'
 import { Constants } from './Constants'
 import { MultichainLibrarySettings } from './Settings'
 
@@ -43,5 +44,9 @@ export async function getSushiSwapQuote(
         { signal: AbortSignal.timeout(settings.fetchTimeoutMillis) }
     )
     const data = await response.json()
+    if (response.status >= 400) {
+        const reason = data.detail || data.title
+        throw Error(Types.isString(reason) ? reason : `SushiSwap API error: ${response.status}`, { cause: data })
+    }
     return data as SushiResponse
 }
