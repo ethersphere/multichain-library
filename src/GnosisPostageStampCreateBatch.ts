@@ -50,7 +50,7 @@ export async function createBatchGnosis(
                     options.batchNonce,
                     options.immutable
                 ],
-                gas: 1000000n,
+                gas: 1_200_000n,
                 gasPrice: selectGasPrice(i),
                 type: 'legacy',
                 chain: gnosis,
