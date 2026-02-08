@@ -8,6 +8,7 @@ import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativ
 import { createBatchGnosis, CreateBatchGnosisOptions } from './GnosisPostageStampCreateBatch'
 import { getStoragePriceGnosis } from './GnosisPostageStampStoragePrice'
 import { GnosisSwapAutoOptions, GnosisSwapCustomOptions, swapOnGnosisAuto, swapOnGnosisCustom } from './GnosisSwap'
+import { getGnosisTransaction, GnosisTransaction } from './GnosisTransaction'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import {
     multiTransferGnosisNative,
@@ -39,6 +40,10 @@ export class MultichainLibrary {
     updateSettings(settings: Partial<MultichainLibrarySettings>) {
         this.settings = Objects.deepMerge2(getDefaultMultichainLibrarySettings(), settings || {})
         this.jsonRpcProvider = new RollingValueProvider(this.settings.gnosisJsonRpcProviders)
+    }
+
+    getGnosisTransaction(transactionHash: `0x${string}`): Promise<GnosisTransaction> {
+        return getGnosisTransaction(transactionHash, this.settings, this.jsonRpcProvider)
     }
 
     getGnosisBzzBalance(address: string): Promise<FixedPointNumber> {
