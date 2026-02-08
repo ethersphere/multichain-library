@@ -23,5 +23,6 @@ export async function getGnosisTransaction(
     const response = await durableFetch(jsonRpcProvider, settings, 'POST', payload)
     const data = await response.json()
     const object = Types.asObject(data)
-    return object as unknown as GnosisTransaction
+    const result = Types.asObject(object.result)
+    return result as unknown as GnosisTransaction
 }
