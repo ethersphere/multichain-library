@@ -20,11 +20,16 @@ export interface CreateBatchGnosisOptions {
     nonce?: number
 }
 
+export interface CreateBatchResult {
+    transactionHash: `0x${string}`
+    batchId: `0x${string}`
+}
+
 export async function createBatchGnosis(
     options: CreateBatchGnosisOptions,
     settings: MultichainLibrarySettings,
     jsonRpcProvider: RollingValueProvider<string>
-): Promise<`0x${string}`> {
+): Promise<CreateBatchResult> {
     const account = privateKeyToAccount(options.originPrivateKey)
     const client = createWalletClient({
         chain: gnosis,
@@ -32,7 +37,7 @@ export async function createBatchGnosis(
     })
     for (let i = 0; i < 4; i++) {
         try {
-            const hash = await client.writeContract({
+            const transactionHash = await client.writeContract({
                 account,
                 abi: GnosisPostageStampABI,
                 address: Constants.postageStampGnosisAddress,
@@ -51,7 +56,7 @@ export async function createBatchGnosis(
                 chain: gnosis,
                 nonce: options.nonce ?? (await getGnosisTransactionCount(account.address, settings, jsonRpcProvider))
             })
-            const payload = { jsonrpc: '2.0', id: 1, method: 'eth_getTransactionReceipt', params: [hash] }
+            const payload = { jsonrpc: '2.0', id: 1, method: 'eth_getTransactionReceipt', params: [transactionHash] }
             for (let j = 0; j < 4; j++) {
                 try {
                     await System.sleepMillis(Dates.seconds(5))
@@ -69,7 +74,10 @@ export async function createBatchGnosis(
                         if (event) {
                             const topics = Types.asArray(event.topics)
                             if (topics[1]) {
-                                return Types.asHexString(topics[1])
+                                return {
+                                    transactionHash,
+                                    batchId: Types.asHexString(topics[1])
+                                }
                             }
                         }
                     }
