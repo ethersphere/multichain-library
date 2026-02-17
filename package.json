@@ -1,7 +1,7 @@
 {
     "name": "@upcoming/multichain-library",
     "private": false,
-    "version": "0.7.2",
+    "version": "0.8.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "exports": {
@@ -19,7 +19,7 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "cafe-utility": "^33.4.0",
+        "cafe-utility": "^33.7.0",
         "viem": "^2.45.1"
     },
     "devDependencies": {

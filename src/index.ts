@@ -26,6 +26,8 @@ import {
 
 export { MultichainLibrarySettings } from './Settings'
 export { SushiResponse } from './SushiSwap'
+export { xBZZ } from './xBZZ'
+export { xDAI } from './xDAI'
 
 export class MultichainLibrary {
     settings: MultichainLibrarySettings

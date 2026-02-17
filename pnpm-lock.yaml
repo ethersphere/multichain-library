@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       cafe-utility:
-        specifier: ^33.4.0
-        version: 33.4.0
+        specifier: ^33.7.0
+        version: 33.7.0
       viem:
         specifier: ^2.45.1
         version: 2.45.1(typescript@5.9.3)
@@ -56,8 +56,8 @@ packages:
       zod:
         optional: true
 
-  cafe-utility@33.4.0:
-    resolution: {integrity: sha512-AdmtzfenM15bPa0WKVVQ7ghdTEQ7Bj565rmgA+5FCDpFKbsbQf8lCgOCcnstFE1xMyrD4WTLg7uFOdd5GwFHvw==}
+  cafe-utility@33.7.0:
+    resolution: {integrity: sha512-3ioj2iGpIRv6PXARWUnQeDZDt5TSufPr9MZDe2aCeDT8VSHG/AGrMKAuJl+mXbvGhOX03q0VORaPnqBevLdVeQ==}
 
   eventemitter3@5.0.1:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
@@ -129,7 +129,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
-  cafe-utility@33.4.0: {}
+  cafe-utility@33.7.0: {}
 
   eventemitter3@5.0.1: {}
 
