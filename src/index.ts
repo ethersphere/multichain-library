@@ -8,7 +8,12 @@ import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativ
 import { createBatchGnosis, CreateBatchGnosisOptions, CreateBatchResult } from './GnosisPostageStampCreateBatch'
 import { getStoragePriceGnosis } from './GnosisPostageStampStoragePrice'
 import { GnosisSwapAutoOptions, GnosisSwapCustomOptions, swapOnGnosisAuto, swapOnGnosisCustom } from './GnosisSwap'
-import { getGnosisTransaction, GnosisTransaction } from './GnosisTransaction'
+import {
+    getGnosisTransaction,
+    getGnosisTransactionReceipt,
+    GnosisTransaction,
+    GnosisTransactionReceipt
+} from './GnosisTransaction'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import {
     multiTransferGnosisNative,
@@ -21,7 +26,8 @@ import { getGnosisBzzTokenPrice, getTokenPrice } from './TokenPrice'
 import {
     waitForGnosisBzzBalanceToIncrease,
     waitForGnosisNativeBalanceToDecrease,
-    waitForGnosisNativeBalanceToIncrease
+    waitForGnosisNativeBalanceToIncrease,
+    waitForGnosisTransactionReceipt
 } from './Waiter'
 
 export { MultichainLibrarySettings } from './Settings'
@@ -46,6 +52,10 @@ export class MultichainLibrary {
 
     getGnosisTransaction(transactionHash: `0x${string}`): Promise<GnosisTransaction> {
         return getGnosisTransaction(transactionHash, this.settings, this.jsonRpcProvider)
+    }
+
+    getGnosisTransactionReceipt(transactionHash: `0x${string}`): Promise<GnosisTransactionReceipt> {
+        return getGnosisTransactionReceipt(transactionHash, this.settings, this.jsonRpcProvider)
     }
 
     getGnosisBzzBalance(address: string): Promise<FixedPointNumber> {
@@ -98,6 +108,10 @@ export class MultichainLibrary {
 
     waitForGnosisNativeBalanceToIncrease(address: `0x${string}`, initialBalance: bigint): Promise<void> {
         return waitForGnosisNativeBalanceToIncrease(address, initialBalance, this.settings, this.jsonRpcProvider)
+    }
+
+    waitForGnosisTransactionReceipt(txHash: `0x${string}`): Promise<void> {
+        return waitForGnosisTransactionReceipt(txHash, this.settings, this.jsonRpcProvider)
     }
 
     swapOnGnosisAuto(options: GnosisSwapAutoOptions): Promise<`0x${string}`> {

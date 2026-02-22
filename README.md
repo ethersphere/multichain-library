@@ -20,10 +20,15 @@ const library = new MultichainLibrary(settings)
 
 `settings` is optional, supporting:
 
--   `gnosisJsonRpc`
--   `fetchTimeoutMillis`
+-   `gnosisJsonRpc`: `string[]`
+-   `fetchTimeoutMillis`: `number`
 
 # Functions
+
+## Transaction helpers
+
+-   `getGnosisTransaction(txHash: string): Promise<GnosisTransaction>`
+-   `getGnosisTransactionReceipt(txHash: string): Promise<GnosisTransactionReceipt>`
 
 ## Nonce helpers
 
@@ -44,6 +49,7 @@ const library = new MultichainLibrary(settings)
 -   `waitForGnosisBzzBalanceToIncrease(address: string, initialBalance: bigint): Promise<void>`
 -   `waitForGnosisNativeBalanceToDecrease(address: string, initialBalance: bigint): Promise<void>`
 -   `waitForGnosisNativeBalanceToIncrease(address: string, initialBalance: bigint): Promise<void>`
+-   `waitForGnosisTransactionReceipt(txHash: string): Promise<void>`
 
 ## SushiSwap helpers
 
@@ -56,15 +62,18 @@ const library = new MultichainLibrary(settings)
 -   `transferGnosisBzz(options: GnosisBzzTransferOptions): Promise<string>`
 -   `transferGnosisNative(options: GnosisNativeTransferOptions): Promise<string>`
 
-In both cases, `options` is:
+In both cases, `options` is an object:
 
 ```ts
-amount: string | bigint
-originPrivateKey: `0x${string}`
-to: `0x${string}`
-nonce?: number
+{
+    amount: string | bigint
+    originPrivateKey: `0x${string}`
+    to: `0x${string}`
+    nonce?: number
+}
 ```
 
 ## BZZ helpers
 
 -   `approveGnosisBzz(options: ApproveGnosisBzzOptions): Promise<string>`
+-   `createBatchGnosis(options: CreateBatchGnosisOptions): Promise<CreateBatchResult>`

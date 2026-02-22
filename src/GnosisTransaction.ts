@@ -26,3 +26,30 @@ export async function getGnosisTransaction(
     const result = Types.asObject(object.result)
     return result as unknown as GnosisTransaction
 }
+
+export interface GnosisTransactionReceipt {
+    blockHash: `0x${string}`
+    blockNumber: `0x${string}`
+    cumulativeGasUsed: `0x${string}`
+    effectiveGasPrice: `0x${string}`
+    from: `0x${string}`
+    gasUsed: `0x${string}`
+    status: `0x${string}`
+    to: `0x${string}`
+    transactionHash: `0x${string}`
+    transactionIndex: `0x${string}`
+    type: `0x${string}`
+}
+
+export async function getGnosisTransactionReceipt(
+    transactionHash: `0x${string}`,
+    settings: MultichainLibrarySettings,
+    jsonRpcProvider: RollingValueProvider<string>
+): Promise<GnosisTransactionReceipt> {
+    const payload = { jsonrpc: '2.0', id: 1, method: 'eth_getTransactionReceipt', params: [transactionHash] }
+    const response = await durableFetch(jsonRpcProvider, settings, 'POST', payload)
+    const data = await response.json()
+    const object = Types.asObject(data)
+    const result = Types.asObject(object.result)
+    return result as unknown as GnosisTransactionReceipt
+}
