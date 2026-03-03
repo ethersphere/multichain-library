@@ -27,6 +27,7 @@ const library = new MultichainLibrary(settings)
 
 ## Transaction helpers
 
+-   `getGnosisGasPrice(): Promise<FixedPointNumber>`
 -   `getGnosisTransaction(txHash: string): Promise<GnosisTransaction>`
 -   `getGnosisTransactionReceipt(txHash: string): Promise<GnosisTransactionReceipt>`
 

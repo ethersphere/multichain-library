@@ -3,8 +3,8 @@ import { createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { gnosis } from 'viem/chains'
 import { Constants } from './Constants'
-import { selectGasPrice } from './GasPriceSelector'
 import { GnosisBzzABI } from './GnosisBzzAbi'
+import { getGnosisGasPrice } from './GnosisGasPrice'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import { MultichainLibrarySettings } from './Settings'
 
@@ -34,7 +34,7 @@ export async function approveGnosisBzz(
                 functionName: 'approve',
                 args: [options.spender, BigInt(options.amount)],
                 gas: 100000n,
-                gasPrice: selectGasPrice(i),
+                gasPrice: (await getGnosisGasPrice(settings, jsonRpcProvider)).value,
                 type: 'legacy',
                 chain: gnosis,
                 nonce: options.nonce ?? (await getGnosisTransactionCount(account.address, settings, jsonRpcProvider))

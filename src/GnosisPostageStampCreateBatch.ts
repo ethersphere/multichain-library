@@ -4,7 +4,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 import { gnosis } from 'viem/chains'
 import { Constants } from './Constants'
 import { durableFetch } from './Fetch'
-import { selectGasPrice } from './GasPriceSelector'
+import { getGnosisGasPrice } from './GnosisGasPrice'
 import { GnosisPostageStampABI } from './GnosisPostageStampAbi'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import { MultichainLibrarySettings } from './Settings'
@@ -51,7 +51,7 @@ export async function createBatchGnosis(
                     options.immutable
                 ],
                 gas: 1_200_000n,
-                gasPrice: selectGasPrice(i),
+                gasPrice: (await getGnosisGasPrice(settings, jsonRpcProvider)).value,
                 type: 'legacy',
                 chain: gnosis,
                 nonce: options.nonce ?? (await getGnosisTransactionCount(account.address, settings, jsonRpcProvider))

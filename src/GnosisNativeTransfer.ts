@@ -3,7 +3,7 @@ import { createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { gnosis } from 'viem/chains'
 import { Constants } from './Constants'
-import { selectGasPrice } from './GasPriceSelector'
+import { getGnosisGasPrice } from './GnosisGasPrice'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import { MultichainLibrarySettings } from './Settings'
 
@@ -31,7 +31,7 @@ export async function transferGnosisNative(
                 chainId: Constants.gnosisChainId,
                 account: account.address,
                 gas: 21000n,
-                gasPrice: selectGasPrice(i),
+                gasPrice: (await getGnosisGasPrice(settings, jsonRpcProvider)).value,
                 type: 'legacy',
                 to: options.to,
                 value: BigInt(options.amount),

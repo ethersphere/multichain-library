@@ -3,6 +3,7 @@ import { Constants } from './Constants'
 import { approveGnosisBzz, ApproveGnosisBzzOptions } from './GnosisBzzApprove'
 import { getGnosisBzzBalance } from './GnosisBzzBalance'
 import { transferGnosisBzz, TransferGnosisBzzOptions } from './GnosisBzzTransfer'
+import { getGnosisGasPrice } from './GnosisGasPrice'
 import { getGnosisNativeBalance } from './GnosisNativeBalance'
 import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativeTransfer'
 import { createBatchGnosis, CreateBatchGnosisOptions, CreateBatchResult } from './GnosisPostageStampCreateBatch'
@@ -96,6 +97,10 @@ export class MultichainLibrary {
 
     getStoragePriceGnosis(): Promise<bigint> {
         return getStoragePriceGnosis(this.settings, this.jsonRpcProvider)
+    }
+
+    getGnosisGasPrice(): Promise<FixedPointNumber> {
+        return getGnosisGasPrice(this.settings, this.jsonRpcProvider)
     }
 
     waitForGnosisBzzBalanceToIncrease(address: string, initialBalance: bigint): Promise<void> {
