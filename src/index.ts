@@ -16,6 +16,7 @@ import {
     GnosisTransactionReceipt
 } from './GnosisTransaction'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
+import { getGnosisUsdcBalance } from './GnosisUsdcBalance'
 import {
     multiTransferGnosisNative,
     MultiTransferGnosisNativeOptions,
@@ -28,11 +29,14 @@ import {
     waitForGnosisBzzBalanceToIncrease,
     waitForGnosisNativeBalanceToDecrease,
     waitForGnosisNativeBalanceToIncrease,
-    waitForGnosisTransactionReceipt
+    waitForGnosisTransactionReceipt,
+    waitForGnosisUsdcBalanceToDecrease,
+    waitForGnosisUsdcBalanceToIncrease
 } from './Waiter'
 
 export { MultichainLibrarySettings } from './Settings'
 export { SushiResponse } from './SushiSwap'
+export { USDC } from './USDC'
 export { xBZZ } from './xBZZ'
 export { xDAI } from './xDAI'
 
@@ -65,6 +69,10 @@ export class MultichainLibrary {
 
     getGnosisNativeBalance(address: `0x${string}`): Promise<FixedPointNumber> {
         return getGnosisNativeBalance(address, this.settings, this.jsonRpcProvider)
+    }
+
+    getGnosisUsdcBalance(address: `0x${string}`): Promise<FixedPointNumber> {
+        return getGnosisUsdcBalance(address, this.settings, this.jsonRpcProvider)
     }
 
     getTokenPrice(tokenAddress: `0x${string}`, chainId: number): Promise<number> {
@@ -113,6 +121,14 @@ export class MultichainLibrary {
 
     waitForGnosisNativeBalanceToIncrease(address: `0x${string}`, initialBalance: bigint): Promise<void> {
         return waitForGnosisNativeBalanceToIncrease(address, initialBalance, this.settings, this.jsonRpcProvider)
+    }
+
+    waitForGnosisUsdcBalanceToDecrease(address: `0x${string}`, initialBalance: bigint): Promise<void> {
+        return waitForGnosisUsdcBalanceToDecrease(address, initialBalance, this.settings, this.jsonRpcProvider)
+    }
+
+    waitForGnosisUsdcBalanceToIncrease(address: `0x${string}`, initialBalance: bigint): Promise<void> {
+        return waitForGnosisUsdcBalanceToIncrease(address, initialBalance, this.settings, this.jsonRpcProvider)
     }
 
     waitForGnosisTransactionReceipt(txHash: `0x${string}`): Promise<void> {

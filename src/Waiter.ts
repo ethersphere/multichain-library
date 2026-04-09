@@ -2,6 +2,7 @@ import { Dates, RollingValueProvider, System } from 'cafe-utility'
 import { getGnosisBzzBalance } from './GnosisBzzBalance'
 import { getGnosisNativeBalance } from './GnosisNativeBalance'
 import { getGnosisTransactionReceipt } from './GnosisTransaction'
+import { getGnosisUsdcBalance } from './GnosisUsdcBalance'
 import { MultichainLibrarySettings } from './Settings'
 
 export async function waitForGnosisTransactionReceipt(
@@ -75,6 +76,46 @@ export async function waitForGnosisNativeBalanceToIncrease(
                 return balance.value > initialBalance
             } catch (error) {
                 console.error(`Error fetching ${address} wallet native balance:`, error)
+                return false
+            }
+        },
+        { attempts: 20, waitMillis: Dates.seconds(15) }
+    )
+}
+
+export async function waitForGnosisUsdcBalanceToDecrease(
+    address: `0x${string}`,
+    initialBalance: bigint,
+    settings: MultichainLibrarySettings,
+    jsonRpcProvider: RollingValueProvider<string>
+): Promise<void> {
+    await System.waitFor(
+        async () => {
+            try {
+                const balance = await getGnosisUsdcBalance(address, settings, jsonRpcProvider)
+                return balance.value < initialBalance
+            } catch (error) {
+                console.error(`Error fetching ${address} wallet USDC balance:`, error)
+                return false
+            }
+        },
+        { attempts: 20, waitMillis: Dates.seconds(15) }
+    )
+}
+
+export async function waitForGnosisUsdcBalanceToIncrease(
+    address: `0x${string}`,
+    initialBalance: bigint,
+    settings: MultichainLibrarySettings,
+    jsonRpcProvider: RollingValueProvider<string>
+): Promise<void> {
+    await System.waitFor(
+        async () => {
+            try {
+                const balance = await getGnosisUsdcBalance(address, settings, jsonRpcProvider)
+                return balance.value > initialBalance
+            } catch (error) {
+                console.error(`Error fetching ${address} wallet USDC balance:`, error)
                 return false
             }
         },
