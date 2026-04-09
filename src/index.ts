@@ -131,7 +131,12 @@ export class MultichainLibrary {
         return getGnosisTransactionCount(address, this.settings, this.jsonRpcProvider)
     }
 
-    getSushiSwapQuote(amount: string, sender: string, recipient: string): Promise<SushiResponse> {
-        return getSushiSwapQuote(amount, sender, recipient, this.settings)
+    getSushiSwapQuote(
+        inputToken: 'xDAI' | 'USDC',
+        amount: string,
+        sender: string,
+        recipient: string
+    ): Promise<SushiResponse> {
+        return getSushiSwapQuote(inputToken, amount, sender, recipient, this.settings)
     }
 }

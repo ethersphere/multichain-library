@@ -32,12 +32,13 @@ export interface SushiResponse {
 }
 
 export async function getSushiSwapQuote(
+    inputToken: 'xDAI' | 'USDC',
     amount: string,
     sender: string,
     recipient: string,
     settings: MultichainLibrarySettings
 ) {
-    const tokenIn = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' // xDAI
+    const tokenIn = inputToken === 'xDAI' ? Constants.sushiSwapGnosisDaiAddress : Constants.usdcGnosisAddress
     const tokenOut = Constants.bzzGnosisAddress
     const response = await fetch(
         `https://api.sushi.com/swap/v7/100?tokenIn=${tokenIn}&tokenOut=${tokenOut}&amount=${amount}&maxSlippage=0.005&sender=${sender}&recipient=${recipient}&fee=0.0025&feeBy=output&feeReceiver=0xde7259893af7cdbc9fd806c6ba61d22d581d5667&simulate=true`,

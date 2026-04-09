@@ -8,6 +8,7 @@ import { MultichainLibrarySettings } from './Settings'
 import { getSushiSwapQuote } from './SushiSwap'
 
 export interface GnosisSwapAutoOptions {
+    inputToken: 'xDAI' | 'USDC'
     amount: string | bigint
     originPrivateKey: `0x${string}`
     to: `0x${string}`
@@ -19,7 +20,13 @@ export async function swapOnGnosisAuto(
     jsonRpcProvider: RollingValueProvider<string>
 ) {
     const account = privateKeyToAccount(options.originPrivateKey)
-    const quote = await getSushiSwapQuote(options.amount.toString(), account.address, options.to, settings)
+    const quote = await getSushiSwapQuote(
+        options.inputToken,
+        options.amount.toString(),
+        account.address,
+        options.to,
+        settings
+    )
     return swapOnGnosisCustom(
         {
             originPrivateKey: options.originPrivateKey,
