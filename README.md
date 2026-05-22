@@ -78,3 +78,7 @@ In both cases, `options` is an object:
 
 -   `approveGnosisBzz(options: ApproveGnosisBzzOptions): Promise<string>`
 -   `createBatchGnosis(options: CreateBatchGnosisOptions): Promise<CreateBatchResult>`
+
+## Maintainers
+
+- [Cafe137](https://github.com/Cafe137)
