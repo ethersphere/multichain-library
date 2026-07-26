@@ -5,7 +5,8 @@ import { gnosis } from 'viem/chains'
 import { Constants } from './Constants'
 import { getGnosisTransactionCount } from './GnosisTransactionCount'
 import { MultichainLibrarySettings } from './Settings'
-import { getSushiSwapQuote } from './SushiSwap'
+import { getSushiContractQuoteXdai } from './SushiSwap'
+import {getGnosisGasPrice} from './GnosisGasPrice'
 
 export interface GnosisSwapAutoOptions {
     inputToken: 'xDAI' | 'USDC'
@@ -20,20 +21,26 @@ export async function swapOnGnosisAuto(
     jsonRpcProvider: RollingValueProvider<string>
 ) {
     const account = privateKeyToAccount(options.originPrivateKey)
-    const quote = await getSushiSwapQuote(
-        options.inputToken,
-        options.amount.toString(),
+    if (options.inputToken === 'USDC') {
+        throw Error('USDC swaps not yet migrated to direct contract calls')
+    }
+
+    const quote = await getSushiContractQuoteXdai(
+        BigInt(options.amount),
         account.address,
         options.to,
-        settings
+        jsonRpcProvider.current()
     )
+
+    const gasPrice = await getGnosisGasPrice(settings, jsonRpcProvider)
+
     return swapOnGnosisCustom(
         {
             originPrivateKey: options.originPrivateKey,
-            gas: (BigInt(quote.tx.gas) * 5n) / 4n, // add 25% buffer
-            gasPrice: BigInt(quote.tx.gasPrice),
+            gas: quote.tx.gas,           // buffer removed here — swapOnGnosisCustom already adds 25%
+            gasPrice: gasPrice.value,          // ← see note below
             to: quote.tx.to,
-            value: BigInt(quote.tx.value),
+            value: quote.tx.value,
             data: quote.tx.data
         },
         settings,
