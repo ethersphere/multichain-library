@@ -37,6 +37,8 @@ export interface SushiResponse {
     tx: SushiTx
 }
 
+// This can be deleted now, not using the API, leaving here for now
+
 export async function getSushiSwapQuote(
     inputToken: 'xDAI' | 'USDC',
     amount: string,
@@ -58,9 +60,7 @@ export async function getSushiSwapQuote(
     return data as SushiResponse
 }
 
-// ============================================================
 // NEW: direct contract quote via SushiSwap V3 (Gnosis)
-// ============================================================
 
 const quoterAbi = parseAbi([
     'function quoteExactInputSingle((address tokenIn, address tokenOut, uint256 amountIn, uint24 fee, uint160 sqrtPriceLimitX96)) returns (uint256 amountOut, uint160 sqrtPriceX96After, uint32 initializedTicksCrossed, uint256 gasEstimate)',
