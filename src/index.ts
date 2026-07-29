@@ -23,7 +23,7 @@ import {
     MultiTransferGnosisNativeResult
 } from './MultiGnosisNativeTransfer'
 import { getDefaultMultichainLibrarySettings, MultichainLibrarySettings } from './Settings'
-import { getSushiSwapQuote, SushiResponse } from './SushiSwap'
+import { ContractSwapQuote, getSushiContractQuoteXdai, getSushiSwapQuote, SushiResponse } from './SushiSwap'
 import { getGnosisBzzTokenPrice, getTokenPrice } from './TokenPrice'
 import {
     waitForGnosisBzzBalanceToIncrease,
@@ -35,7 +35,7 @@ import {
 } from './Waiter'
 
 export { MultichainLibrarySettings } from './Settings'
-export { SushiResponse } from './SushiSwap'
+export { ContractSwapQuote, SushiResponse } from './SushiSwap'
 export { USDC } from './USDC'
 export { xBZZ } from './xBZZ'
 export { xDAI } from './xDAI'
@@ -154,5 +154,13 @@ export class MultichainLibrary {
         recipient: string
     ): Promise<SushiResponse> {
         return getSushiSwapQuote(inputToken, amount, sender, recipient, this.settings)
+    }
+
+    getSushiContractQuoteXdai(
+        amount: bigint,
+        sender: `0x${string}`,
+        recipient: `0x${string}`
+    ): Promise<ContractSwapQuote> {
+        return getSushiContractQuoteXdai(amount, sender, recipient, this.jsonRpcProvider.current())
     }
 }
