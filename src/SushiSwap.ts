@@ -1,8 +1,8 @@
 import { Types } from 'cafe-utility'
 import { createPublicClient, encodeFunctionData, http, parseAbi } from 'viem'
 import { gnosis } from 'viem/chains'
-import { Constants } from './Constants'
-import { MultichainLibrarySettings } from './Settings'
+import { Constants } from './Constants.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 // ============================================================
 // OLD: API-based quote (kept during migration, remove later)

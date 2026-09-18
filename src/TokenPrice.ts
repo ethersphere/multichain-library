@@ -1,5 +1,5 @@
-import { Constants } from './Constants'
-import { MultichainLibrarySettings } from './Settings'
+import { Constants } from './Constants.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 interface TokenPriceResponse {
     price: number

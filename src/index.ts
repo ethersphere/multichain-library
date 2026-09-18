@@ -1,30 +1,30 @@
 import { FixedPointNumber, Objects, RollingValueProvider } from 'cafe-utility'
-import { Constants } from './Constants'
-import { approveGnosisBzz, ApproveGnosisBzzOptions } from './GnosisBzzApprove'
-import { getGnosisBzzBalance } from './GnosisBzzBalance'
-import { transferGnosisBzz, TransferGnosisBzzOptions } from './GnosisBzzTransfer'
-import { getGnosisGasPrice } from './GnosisGasPrice'
-import { getGnosisNativeBalance } from './GnosisNativeBalance'
-import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativeTransfer'
-import { createBatchGnosis, CreateBatchGnosisOptions, CreateBatchResult } from './GnosisPostageStampCreateBatch'
-import { getStoragePriceGnosis } from './GnosisPostageStampStoragePrice'
-import { GnosisSwapAutoOptions, GnosisSwapCustomOptions, swapOnGnosisAuto, swapOnGnosisCustom } from './GnosisSwap'
+import { Constants } from './Constants.js'
+import { approveGnosisBzz, ApproveGnosisBzzOptions } from './GnosisBzzApprove.js'
+import { getGnosisBzzBalance } from './GnosisBzzBalance.js'
+import { transferGnosisBzz, TransferGnosisBzzOptions } from './GnosisBzzTransfer.js'
+import { getGnosisGasPrice } from './GnosisGasPrice.js'
+import { getGnosisNativeBalance } from './GnosisNativeBalance.js'
+import { transferGnosisNative, TransferGnosisNativeOptions } from './GnosisNativeTransfer.js'
+import { createBatchGnosis, CreateBatchGnosisOptions, CreateBatchResult } from './GnosisPostageStampCreateBatch.js'
+import { getStoragePriceGnosis } from './GnosisPostageStampStoragePrice.js'
+import { GnosisSwapAutoOptions, GnosisSwapCustomOptions, swapOnGnosisAuto, swapOnGnosisCustom } from './GnosisSwap.js'
 import {
     getGnosisTransaction,
     getGnosisTransactionReceipt,
     GnosisTransaction,
     GnosisTransactionReceipt
-} from './GnosisTransaction'
-import { getGnosisTransactionCount } from './GnosisTransactionCount'
-import { getGnosisUsdcBalance } from './GnosisUsdcBalance'
+} from './GnosisTransaction.js'
+import { getGnosisTransactionCount } from './GnosisTransactionCount.js'
+import { getGnosisUsdcBalance } from './GnosisUsdcBalance.js'
 import {
     multiTransferGnosisNative,
     MultiTransferGnosisNativeOptions,
     MultiTransferGnosisNativeResult
-} from './MultiGnosisNativeTransfer'
-import { getDefaultMultichainLibrarySettings, MultichainLibrarySettings } from './Settings'
-import { ContractSwapQuote, getSushiContractQuoteXdai, getSushiSwapQuote, SushiResponse } from './SushiSwap'
-import { getGnosisBzzTokenPrice, getTokenPrice } from './TokenPrice'
+} from './MultiGnosisNativeTransfer.js'
+import { getDefaultMultichainLibrarySettings, MultichainLibrarySettings } from './Settings.js'
+import { ContractSwapQuote, getSushiContractQuoteXdai, getSushiSwapQuote, SushiResponse } from './SushiSwap.js'
+import { getGnosisBzzTokenPrice, getTokenPrice } from './TokenPrice.js'
 import {
     waitForGnosisBzzBalanceToIncrease,
     waitForGnosisNativeBalanceToDecrease,
@@ -32,13 +32,13 @@ import {
     waitForGnosisTransactionReceipt,
     waitForGnosisUsdcBalanceToDecrease,
     waitForGnosisUsdcBalanceToIncrease
-} from './Waiter'
+} from './Waiter.js'
 
-export { MultichainLibrarySettings } from './Settings'
-export { ContractSwapQuote, SushiResponse } from './SushiSwap'
-export { USDC } from './USDC'
-export { xBZZ } from './xBZZ'
-export { xDAI } from './xDAI'
+export { MultichainLibrarySettings } from './Settings.js'
+export { ContractSwapQuote, SushiResponse } from './SushiSwap.js'
+export { USDC } from './USDC.js'
+export { xBZZ } from './xBZZ.js'
+export { xDAI } from './xDAI.js'
 
 export class MultichainLibrary {
     settings: MultichainLibrarySettings

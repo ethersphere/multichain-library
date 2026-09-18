@@ -1,5 +1,5 @@
 import { Dates, RollingValueProvider, System } from 'cafe-utility'
-import { MultichainLibrarySettings } from './Settings'
+import { MultichainLibrarySettings } from './Settings.js'
 
 export async function durableFetch(
     jsonRpcProvider: RollingValueProvider<string>,

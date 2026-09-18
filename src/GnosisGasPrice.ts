@@ -1,6 +1,6 @@
 import { FixedPointNumber, RollingValueProvider, Types } from 'cafe-utility'
-import { durableFetch } from './Fetch'
-import { MultichainLibrarySettings } from './Settings'
+import { durableFetch } from './Fetch.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 export async function getGnosisGasPrice(
     settings: MultichainLibrarySettings,

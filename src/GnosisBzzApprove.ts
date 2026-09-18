@@ -2,11 +2,11 @@ import { Dates, Objects, RollingValueProvider, System } from 'cafe-utility'
 import { createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { gnosis } from 'viem/chains'
-import { Constants } from './Constants'
-import { GnosisBzzABI } from './GnosisBzzAbi'
-import { getGnosisGasPrice } from './GnosisGasPrice'
-import { getGnosisTransactionCount } from './GnosisTransactionCount'
-import { MultichainLibrarySettings } from './Settings'
+import { Constants } from './Constants.js'
+import { GnosisBzzABI } from './GnosisBzzAbi.js'
+import { getGnosisGasPrice } from './GnosisGasPrice.js'
+import { getGnosisTransactionCount } from './GnosisTransactionCount.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 export interface ApproveGnosisBzzOptions {
     amount: string | bigint

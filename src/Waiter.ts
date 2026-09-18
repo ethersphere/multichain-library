@@ -1,9 +1,9 @@
 import { Dates, RollingValueProvider, System } from 'cafe-utility'
-import { getGnosisBzzBalance } from './GnosisBzzBalance'
-import { getGnosisNativeBalance } from './GnosisNativeBalance'
-import { getGnosisTransactionReceipt } from './GnosisTransaction'
-import { getGnosisUsdcBalance } from './GnosisUsdcBalance'
-import { MultichainLibrarySettings } from './Settings'
+import { getGnosisBzzBalance } from './GnosisBzzBalance.js'
+import { getGnosisNativeBalance } from './GnosisNativeBalance.js'
+import { getGnosisTransactionReceipt } from './GnosisTransaction.js'
+import { getGnosisUsdcBalance } from './GnosisUsdcBalance.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 export async function waitForGnosisTransactionReceipt(
     transactionHash: `0x${string}`,

@@ -1,7 +1,7 @@
 import { FixedPointNumber, RollingValueProvider, Types } from 'cafe-utility'
-import { Constants } from './Constants'
-import { durableFetch } from './Fetch'
-import { MultichainLibrarySettings } from './Settings'
+import { Constants } from './Constants.js'
+import { durableFetch } from './Fetch.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 export async function getGnosisUsdcBalance(
     address: string,

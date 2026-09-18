@@ -2,12 +2,12 @@ import { Dates, Objects, RollingValueProvider, System, Types } from 'cafe-utilit
 import { createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { gnosis } from 'viem/chains'
-import { Constants } from './Constants'
-import { durableFetch } from './Fetch'
-import { getGnosisGasPrice } from './GnosisGasPrice'
-import { GnosisPostageStampABI } from './GnosisPostageStampAbi'
-import { getGnosisTransactionCount } from './GnosisTransactionCount'
-import { MultichainLibrarySettings } from './Settings'
+import { Constants } from './Constants.js'
+import { durableFetch } from './Fetch.js'
+import { getGnosisGasPrice } from './GnosisGasPrice.js'
+import { GnosisPostageStampABI } from './GnosisPostageStampAbi.js'
+import { getGnosisTransactionCount } from './GnosisTransactionCount.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 export interface CreateBatchGnosisOptions {
     originPrivateKey: `0x${string}`

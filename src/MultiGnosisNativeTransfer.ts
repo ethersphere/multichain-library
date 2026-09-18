@@ -1,8 +1,8 @@
 import { RollingValueProvider } from 'cafe-utility'
 import { privateKeyToAccount } from 'viem/accounts'
-import { transferGnosisNative } from './GnosisNativeTransfer'
-import { getGnosisTransactionCount } from './GnosisTransactionCount'
-import { MultichainLibrarySettings } from './Settings'
+import { transferGnosisNative } from './GnosisNativeTransfer.js'
+import { getGnosisTransactionCount } from './GnosisTransactionCount.js'
+import { MultichainLibrarySettings } from './Settings.js'
 
 export interface MultiTransferGnosisNativeOptions {
     amount: string | bigint
